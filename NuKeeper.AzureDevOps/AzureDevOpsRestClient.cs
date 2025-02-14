@@ -121,7 +121,7 @@ namespace NuKeeper.AzureDevOps
         {
             //return GetResource<Resource<Account>>("/_apis/accounts");
 
-
+            // https://stackoverflow.com/questions/73569095/how-to-get-current-user-information-from-rest-api-in-azure-devops
             // https://dev.azure.com/sist-sa-ucsb/_apis/ConnectionData
             var cd = GetResource<ConnectionData>("_apis/ConnectionData", previewApi: true).Result;
             var au = cd.authenticatedUser;
@@ -131,13 +131,13 @@ namespace NuKeeper.AzureDevOps
             account.accountName = au.Account;
             account.properties = new Dictionary<string, object>();
             account.properties.Add("Mail", account.accountName);
-            
+
             var raccount = new Resource<Account>();
             raccount.count = 1;
             var valList = new List<Account>();
             valList.Add(account);
             raccount.value = valList;
-            
+
             return Task.FromResult(raccount);
         }
 
@@ -206,7 +206,7 @@ namespace NuKeeper.AzureDevOps
             var autoCompleteContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
             return await PatchResource<PullRequest>($"{projectName}/_apis/git/repositories/{azureRepositoryId}/pullRequests/{pullRequestId}", autoCompleteContent);
         }
-        
+
         public async Task<IEnumerable<string>> GetGitRepositoryFileNames(string projectName, string azureRepositoryId)
         {
             var response = await GetResource<GitItemResource>($"{projectName}/_apis/git/repositories/{azureRepositoryId}/items?recursionLevel=Full");

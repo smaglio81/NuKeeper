@@ -1,13 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <PropertyGroup>
-    <NoWarn>1701;1702;CA2007</NoWarn>
+    <NoWarn>1701;1702;CA2007;CA1416</NoWarn>
   </PropertyGroup>
 
   <PropertyGroup>

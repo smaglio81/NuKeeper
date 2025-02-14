@@ -52,9 +52,7 @@ namespace NuKeeper
                     var httpMessageHandler = new HttpClientHandler();
                     if (httpMessageHandler.SupportsAutomaticDecompression)
                     {
-                        // TODO: change to All when moving to .NET 5.0
-                        httpMessageHandler.AutomaticDecompression =
-                            DecompressionMethods.GZip | DecompressionMethods.Deflate;
+                        httpMessageHandler.AutomaticDecompression = DecompressionMethods.All;
                     }
 
                     return httpMessageHandler;

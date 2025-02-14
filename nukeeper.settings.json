@@ -1,0 +1,15 @@
+{
+	"age": "0d",
+	"platform": "AzureDevOps",
+	"api": "https://dev.azure.com/sist-sa-ucsb",
+	"fork": "SingleRepository",
+	"consolidate": true,
+	"include": ".*",
+	"label": [ "automated", "nukeeper" ],
+	"change": "major",
+	"maxPackageUpdates": 25,
+	"outputFormat": "Text",
+	"sa_jiraprojectkey": "ARPRCORE",
+	"sa_jiraassignee": "maglio-s@sa.ucsb.edu",
+	"sa_autocompletepr": true
+}

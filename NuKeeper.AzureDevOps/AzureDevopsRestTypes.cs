@@ -65,6 +65,60 @@ namespace NuKeeper.AzureDevOps
         public string descriptor { get; set; }
     }
 
+    public class UserAccount
+    {
+        public string id { get; set; }
+        public string descriptor { get; set; }
+        public string subjectDescriptor { get; set; }
+        public string providerDisplayName { get; set; } //  ex: Steven Maglio
+        public bool isActive { get; set; }
+        public Dictionary<string, object> properties { get; set; } // ex: "Account": { "$type": "System.String", "$value": "MAGLIO-S@sa.ucsb.edu" }
+        public int resourceVersion { get; set; }
+        public int metaTypeId { get; set; }
+        public string Account
+        {
+            get
+            {
+                if (properties.ContainsKey("Account"))
+                {
+                    switch (properties["Account"])
+                    {
+                        case JObject acctObject:
+                            return acctObject.Property("$value").Value.ToString();
+
+                        case JProperty acctProp:
+                            return acctProp.Value.ToString();
+
+                        case string acctString:
+                            return acctString;
+                    }
+                }
+
+                return string.Empty;
+            }
+        }
+
+    }
+
+    public class LocationServiceData
+    {
+        public string serviceOwner { get; set; }
+        public string defaultAccessMappingMoniker { get; set; }
+        public long lastChangeId { get; set; }
+        public long lastChangeId64 { get; set; }
+    }
+    
+
+    public class ConnectionData
+    {
+        public UserAccount authenticatedUser { get; set; }
+        public UserAccount authorizedUser { get; set; }
+        public string instanceId { get; set; }
+        public string deploymentId { get; set; }
+        public string deploymentType { get; set; }
+        public LocationServiceData locationServiceData { get; set; }
+}
+
     public class GitRefs
     {
         public string name { get; set; }

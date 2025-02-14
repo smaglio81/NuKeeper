@@ -287,7 +287,7 @@ namespace NuKeeper.Commands
             {
                 if (!BranchNamer.IsValidTemplateToken(token))
                 {
-                    tokenErrors.Append($",{token}");
+                    tokenErrors.Append(Language.enUS, $",{token}");
                 }
             }
 

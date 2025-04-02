@@ -39,9 +39,14 @@ namespace NuKeeper.Update.Process
             var projectPath = currentPackage.Path.Info.DirectoryName;
             var projectFileNameCommandLine = ArgumentEscaperWrapper.EscapeAndConcatenate(new string[] { currentPackage.Path.Info.Name });
             var sourceUrl = UriEscapedForArgument(packageSource.SourceUri);
-            var sources = allSources.CommandLine("-s");
 
-            var restoreCommand = $"restore {projectFileNameCommandLine} {sources}";
+            // ARPRDEVOPS-847 & ARPRDEVOPS-848 - The new dotnet.exe (tested on 9) has a real issue parsing local paths
+            //  (ie. "C:\Program Files (x86)\Microsoft SDKs\NuGetPackages\"). I felt like the best solution was to
+            //  remove the articulated list of sources and just let the system use the default nuget.config for the current user.
+            //var sources = allSources.CommandLine("-s");
+            //var restoreCommand = $"restore {projectFileNameCommandLine} {sources}";
+
+            var restoreCommand = $"restore {projectFileNameCommandLine}";
             await _externalProcess.Run(projectPath, "dotnet", restoreCommand, true);
 
             if (currentPackage.Path.PackageReferenceType == PackageReferenceType.ProjectFileOldStyle)
@@ -50,7 +55,7 @@ namespace NuKeeper.Update.Process
                 await _externalProcess.Run(projectPath, "dotnet", removeCommand, true);
             }
 
-            var addCommand = $"add {projectFileNameCommandLine} package {currentPackage.Id} -v {newVersion} -s {sourceUrl}";
+            var addCommand = $"add {projectFileNameCommandLine} package {currentPackage.Id} -v {newVersion} -s {sourceUrl} --no-restore";
             await _externalProcess.Run(projectPath, "dotnet", addCommand, true);
         }
 

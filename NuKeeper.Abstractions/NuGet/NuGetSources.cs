@@ -56,7 +56,8 @@ namespace NuKeeper.Abstractions.NuGet
 
         private static string EscapeSource(PackageSource source)
         {
-            return ArgumentEscaper.EscapeAndConcatenate(new[] { source.Source });
+            var result = ArgumentEscaperWrapper.EscapeAndConcatenate(new[] { source.Source });
+            return result;
         }
     }
 }

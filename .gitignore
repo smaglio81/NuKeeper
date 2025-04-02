@@ -44,3 +44,5 @@ _ReSharper*/
 # Custom
 NuKeeper/Properties/launchSettings.json
 *.orig
+
+Copy-LocalUsage.ps1

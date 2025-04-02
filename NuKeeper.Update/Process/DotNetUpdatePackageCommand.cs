@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using McMaster.Extensions.CommandLineUtils;
 using NuGet.Configuration;
 using NuGet.Versioning;
+using NuKeeper.Abstractions;
 using NuKeeper.Abstractions.NuGet;
 using NuKeeper.Abstractions.RepositoryInspection;
 using NuKeeper.Update.ProcessRunner;
@@ -37,7 +37,7 @@ namespace NuKeeper.Update.Process
             }
 
             var projectPath = currentPackage.Path.Info.DirectoryName;
-            var projectFileNameCommandLine = ArgumentEscaper.EscapeAndConcatenate(new string[] { currentPackage.Path.Info.Name });
+            var projectFileNameCommandLine = ArgumentEscaperWrapper.EscapeAndConcatenate(new string[] { currentPackage.Path.Info.Name });
             var sourceUrl = UriEscapedForArgument(packageSource.SourceUri);
             var sources = allSources.CommandLine("-s");
 
@@ -61,7 +61,7 @@ namespace NuKeeper.Update.Process
                 return string.Empty;
             }
 
-            return ArgumentEscaper.EscapeAndConcatenate(new string[] { uri.ToString() });
+            return ArgumentEscaperWrapper.EscapeAndConcatenate(new string[] { uri.ToString() });
         }
     }
 }
